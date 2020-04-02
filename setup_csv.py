@@ -131,10 +131,12 @@ if __name__ == "__main__":
       if key is None or row[key] is None: continue
       row[key] = row[key].replace('"', '""')
 
+    description = row["description"].replace("\n", "\\n") if row["description"] else None
+
     cur.execute(f'insert into linkedin_dataset values (' +
       f'"{row["prime_key"]}", "{row["dataset_id"]}", "{row["as_of_date"]}", "{row["company_name"]}", "{row["followers_count"]}",' +
       f'"{row["employees_on_platform"]}", "{row["link"]}", "{row["industry"]}", "{row["date_added"]}", "{row["date_update"]}",' +
-      f'"{row["description"]}", "{row["website"]}", "{row["entity_id"]}", "{row["cusip"]}", "{row["isin"]}")'
+      f'"{description}", "{row["website"]}", "{row["entity_id"]}", "{row["cusip"]}", "{row["isin"]}")'
     )
 
   import_csv(LINKEDIN_DATA, linkedin_insert)
